@@ -21,51 +21,42 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import React, { useRef } from "react";
+import React, { useMemo } from "react";
 
 /* REDUX PERSISTENCE */
-const createNoopStorage = () => {
-  return {
-    getItem(_key: any) {
-      return Promise.resolve(null);
-    },
-    setItem(_key: any, value: any) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key: any) {
-      return Promise.resolve();
-    },
-  };
-};
-
 const storage =
-  typeof window === "undefined"
-    ? createNoopStorage()
-    : createWebStorage("local");
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : {
+        getItem: async () => null,
+        setItem: async (_key: string, value: any) => value,
+        removeItem: async () => {},
+      };
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["global"],
 };
+
 const rootReducer = combineReducers({
   global: globalReducer,
   [api.reducerPath]: api.reducer,
 });
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 /* REDUX STORE */
-export const makeStore = () => {
-  return configureStore({
+export const makeStore = () =>
+  configureStore({
     reducer: persistedReducer,
-    middleware: (getDefault) =>
-      getDefault({
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }).concat(api.middleware),
   });
-};
 
 /* REDUX TYPES */
 export type AppStore = ReturnType<typeof makeStore>;
@@ -80,15 +71,13 @@ export default function StoreProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const storeRef = useRef<AppStore>();
-  if (!storeRef.current) {
-    storeRef.current = makeStore();
-    setupListeners(storeRef.current.dispatch);
-  }
-  const persistor = persistStore(storeRef.current);
+  const store = useMemo(() => makeStore(), []);
+  setupListeners(store.dispatch);
+
+  const persistor = useMemo(() => persistStore(store), [store]);
 
   return (
-    <Provider store={storeRef.current}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {children}
       </PersistGate>

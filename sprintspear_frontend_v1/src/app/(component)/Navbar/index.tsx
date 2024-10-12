@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
-  DarkModeOutlined as MoonIcon,
-  LightModeOutlined as SunIcon,
-  SettingsOutlined as Settings,
-} from "@mui/icons-material";
+import { Menu, Moon, Search, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
@@ -26,12 +20,12 @@ const Navbar = () => {
             aria-label="Toggle Sidebar"
             onClick={() => dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))}
           >
-            <MenuIcon className="h-8 w-8 dark:text-white" />
+            <Menu className="h-8 w-8 dark:text-white" />
           </button>
         )}
 
         <div className="relative flex h-min w-[200px]">
-          <SearchIcon className="absolute left-[4px] top-1/2 mr-2 h-5 w-5 -translate-y-1/2 transform cursor-pointer dark:text-white" />
+          <Search className="absolute left-[4px] top-1/2 mr-2 h-5 w-5 -translate-y-1/2 transform cursor-pointer dark:text-white" />
           <input
             type="search"
             className="w-full rounded border-none bg-gray-100 p-2 pl-8 placeholder-gray-500 focus:border-transparent focus:outline-none dark:bg-gray-700 dark:text-white dark:placeholder-white"
@@ -50,9 +44,9 @@ const Navbar = () => {
           }`}
         >
           {isDarkMode ? (
-            <SunIcon className="h-6 w-6 cursor-pointer dark:text-white" />
+            <Sun className="h-6 w-6 cursor-pointer dark:text-white" />
           ) : (
-            <MoonIcon className="h-6 w-6 cursor-pointer dark:text-white" />
+            <Moon className="h-6 w-6 cursor-pointer dark:text-white" />
           )}
         </button>
 
