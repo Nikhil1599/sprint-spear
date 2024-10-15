@@ -5,6 +5,7 @@ import {
   AlertCircle,
   AlertOctagon,
   AlertTriangle,
+  Briefcase,
   ChartGantt,
   ChevronDown,
   ChevronUp,
@@ -22,18 +23,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { setIsSidebarCollapsed } from "@/state";
+import { useGetProjectsQuery } from "@/state/api";
 
 const Sidebar = () => {
+  const [showProjects, setShowProjects] = useState(false);
+  const [showPriority, setShowPriority] = useState(false);
+
+  const { data: projects } = useGetProjectsQuery();
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed,
   );
 
   const sidebarClassNames = `fixed flex flex-col h-full justify-between shadow-xl transition-all duration-300 
-    z-40 dark:bg-black overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0 hidden" : "w-64"}`;
-
-  const [showProjects, setShowProjects] = useState(false);
-  const [showPriority, setShowPriority] = useState(false);
+  z-40 dark:bg-black overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0 hidden" : "w-64"}`;
 
   return (
     <div className={sidebarClassNames}>
@@ -89,6 +92,16 @@ const Sidebar = () => {
             <ChevronDown className="h-5 w-5" />
           )}
         </button>
+
+        {showProjects &&
+          projects?.map((project: any) => (
+            <SidebarLink
+              key={project.id}
+              icon={Briefcase}
+              href={`/projects/${project.id}`}
+              label={project.name}
+            />
+          ))}
 
         {/* PRIORITIES LINKS */}
         <button
