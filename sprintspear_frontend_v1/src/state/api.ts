@@ -59,9 +59,9 @@ export interface Task {
     comments?: Comment[];
     attachments?: Attachment[];
 }
-
+const BASE_URL = process.env.BASE_URL || "http://localhost:9190/api/v1"
 export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.BASE_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     reducerPath: "api",
     tagTypes: ["Projects", "Tasks"],
     endpoints: (build) => ({
@@ -95,7 +95,7 @@ export const api = createApi({
         updateTaskStatus: build.mutation<Task, { taskId: number; status: string }>({
             query: ({ taskId, status }) => ({
                 url: `tasks/${taskId}/status`,
-                method: "POST",
+                method: "PATCH",
                 body: { status },
             }),
             invalidatesTags: (result, error, { taskId }) => [{ type: "Tasks", id: taskId }],
