@@ -1,4 +1,4 @@
-import Header from "@/app/(component)/Header";
+import "gantt-task-react/dist/index.css";
 import { useAppSelector } from "@/app/redux";
 import { useGetTasksQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
@@ -56,7 +56,6 @@ const Timeline = ({ id, setIsModelNewTaskOpen }: Props) => {
           Project Tasks Timeline
         </h1>
         <div className="relative inline-block w-64">
-          <Header name="Timeline" />
           <select
             name=""
             className="focus:shadow-outline block w-full appearance-none rounded border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none dark:border-x-dark-secondary dark:text-white"
