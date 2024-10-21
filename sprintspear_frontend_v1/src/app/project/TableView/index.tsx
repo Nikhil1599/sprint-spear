@@ -1,4 +1,4 @@
-import Header from "@/app/(component)/Header";
+import Header from "@/component/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useAppSelector } from "@/app/redux";
 import { useGetTasksQuery } from "@/state/api";

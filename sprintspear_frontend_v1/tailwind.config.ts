@@ -4,15 +4,11 @@ const config: Config = {
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/component/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradial(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         white: "#ffffff",
         gray: {
@@ -21,18 +17,23 @@ const config: Config = {
           300: "#d1d5db",
           500: "#6b7280",
           700: "#374151",
-          800: "#1f2937"
+          800: "#1f2937",
         },
         blue: {
           200: "#93c5fd",
           400: "#60a5fa",
-          500: "#3b82f6"
+          500: "#3b82f6",
         },
         "dark-bg": "#101214",
         "dark-secondary": "#1d1f21",
         "dark-tertiary": "#3b3d40",
         "blue-primary": "#0275ff",
-        "stroke-dark": "#2d3135"
+        "stroke-dark": "#2d3135",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },

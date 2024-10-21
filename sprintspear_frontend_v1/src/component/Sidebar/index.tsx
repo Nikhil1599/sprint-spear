@@ -29,6 +29,8 @@ const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(false);
   const [showPriority, setShowPriority] = useState(false);
 
+  const BASE_URL = process.env.BASE_URL;
+
   const { data: projects } = useGetProjectsQuery();
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
@@ -98,7 +100,7 @@ const Sidebar = () => {
             <SidebarLink
               key={project.id}
               icon={Briefcase}
-              href={`/projects/${project.id}`}
+              href={`/project/${project.id}`}
               label={project.name}
             />
           ))}
